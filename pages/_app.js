@@ -1,6 +1,6 @@
-import styles, { globalStyles } from "../styles/global";
+import styles, { globalStyles } from '../styles/global'
 
-function MyApp({ Component, pageProps }) {
+function MyApp ({ Component, pageProps }) {
   return (
     <>
       <div>
@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
         {globalStyles}
       </style>
     </>
-  );
+  )
 }
 
 // Only uncomment this method if you have blocking data requirements for
@@ -28,4 +28,4 @@ function MyApp({ Component, pageProps }) {
 //   return { ...appProps }
 // }
 
-export default MyApp;
+export default MyApp
