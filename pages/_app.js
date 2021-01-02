@@ -1,6 +1,6 @@
-import styles, { globalStyles } from '../styles/global'
+import styles, { globalStyles } from "../styles/global"
 
-function MyApp ({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
   return (
     <>
       <div>

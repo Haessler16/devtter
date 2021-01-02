@@ -1,22 +1,26 @@
-import { useState, useEffect } from "react";
-import Head from "next/head";
-import { colors } from "../styles/theme";
-import { Button } from "../components/Button";
-import Github from "../components/Icons/Github";
-import { loginWithGithub, onAuthStateChange } from "../firebase/client";
+import { useState, useEffect } from "react"
+import Head from "next/head"
+
+import Github from "components/Icons/Github"
+import Avatar from "components/Avatar"
+import Button from "components/Button"
+
+import { colors } from "styles/theme"
+
+import { loginWithGithub, onAuthStateChange } from "firebase/client"
 
 export default function Home() {
-  const [user, setUser] = useState(undefined);
+  const [user, setUser] = useState(undefined)
 
   useEffect(() => {
-    onAuthStateChange(setUser);
-  }, []);
+    onAuthStateChange(setUser)
+  }, [])
 
   const handleClick = () => {
     return loginWithGithub()
       .then(setUser)
-      .catch((error) => console.log(error));
-  };
+      .catch((error) => console.log(error))
+  }
 
   return (
     <>
@@ -26,7 +30,7 @@ export default function Home() {
       </Head>
 
       <section>
-        <img src="/favicon.ico" alt="Logo" />
+        <img src="/favicon.ico" alt="Logo" width="60" />
         <h1>Devtter</h1>
         <h2>Talk about development with developers</h2>
         <div>
@@ -37,23 +41,25 @@ export default function Home() {
             </Button>
           )}
           {user && user.avatar && (
-            <div>
-              <img width="120px" height="120px" src={user.avatar} alt="" />
-              <strong>{user.username}</strong>
-            </div>
+            <>
+              <Avatar
+                src={user.avatar}
+                alt={user.username}
+                text={user.username}
+              />
+            </>
           )}
         </div>
       </section>
 
       <style jsx>{`
-
-        section{
+        section {
           display: grid;
           place-content: center;
           place-items: center;
           height: 100%;
         }
-        div{
+        div {
           margin-top: 16px;
         }
         h1 {
@@ -63,10 +69,10 @@ export default function Home() {
         }
         h2 {
           font-size: 21px;
-          margin: 0
+          margin: 0;
           color: ${colors.secondary};
         }
       `}</style>
     </>
-  );
+  )
 }
