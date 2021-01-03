@@ -37,6 +37,7 @@ export default css`
     height: 100%;
     border-radius: 10px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    position: relative;
   }
   @media (min-width: ${breakpoints.movile}) {
     main {
