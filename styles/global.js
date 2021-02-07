@@ -13,6 +13,7 @@ export const globalStyles = css.global`
     padding: 0;
     margin: 0;
     font-family: ${fonts.base};
+    overflow: hidden;
   }
 
   a {
@@ -22,6 +23,11 @@ export const globalStyles = css.global`
 
   * {
     box-sizing: border-box;
+  }
+
+  textarea,
+  input {
+    font-family: ${fonts.base};
   }
 `
 
@@ -35,7 +41,10 @@ export default css`
     background: #fff;
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
     border-radius: 10px;
+    overflow-y: auto;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     position: relative;
   }

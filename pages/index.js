@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import Github from "components/Icons/Github"
@@ -7,15 +7,13 @@ import Button from "components/Button"
 
 import { colors } from "styles/theme"
 
-import { loginWithGithub, onAuthStateChange } from "firebase/client"
+import { loginWithGithub } from "firebase/client"
+import useUser, { USER_STATES } from "hooks/useUser"
 
 export default function Home() {
-  const [user, setUser] = useState(undefined)
+  const user = useUser()
   const router = useRouter()
 
-  useEffect(() => {
-    onAuthStateChange(setUser)
-  }, [])
   useEffect(() => {
     user && router.replace("/home")
   }, [user])
@@ -36,13 +34,13 @@ export default function Home() {
         <h1>Devtter</h1>
         <h2>Talk about development with developers</h2>
         <div>
-          {user === null && (
+          {user === USER_STATES.NOT_LOGGED && (
             <Button onClick={handleClick}>
               <Github fill="white" width="24px" height="24px" />
               Login with Github
             </Button>
           )}
-          {user === "undefined" && <span>Loading...</span>}
+          {user === USER_STATES.NOT_KNOWN && <span>Loading...</span>}
         </div>
       </section>
 
