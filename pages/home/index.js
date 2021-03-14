@@ -27,13 +27,14 @@ export default function HomePage() {
       </header>
       <section>
         {timeline.map(
-          ({ id, userName, userId, avatar, contend, createdAt }) => (
+          ({ id, userName, userId, avatar, img, contend, createdAt }) => (
             <Devit
               key={id}
               id={id}
               createdAt={createdAt}
               userName={userName}
               avatar={avatar}
+              img={img}
               contend={contend}
               userId={userId}
             />
@@ -81,7 +82,7 @@ export default function HomePage() {
         }
 
         nav {
-          background: "#fff";
+          background: white;
           width: 100%;
           height: 49px;
           display: flex;

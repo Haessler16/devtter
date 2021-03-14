@@ -11,6 +11,7 @@ const firebaseConfig = {
   appId: "1:253255122823:web:b6e553ce181c2b2f3fdd22",
   measurementId: "G-VG467KX9LN",
 }
+
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig)
 }
@@ -35,7 +36,7 @@ export const onAuthStateChange = (onChange) => {
   })
 }
 
-export const loginWithGithub = () => {
+export const loginWithGithub = async () => {
   const githubProvider = new firebase.auth.GithubAuthProvider()
   return firebase
     .auth()
@@ -43,10 +44,11 @@ export const loginWithGithub = () => {
     .catch((error) => console.log(error))
 }
 
-export const addDevit = ({ avatar, contend, userId, userName }) => {
+export const addDevit = ({ avatar, contend, userId, userName, img }) => {
   return db.collection("devits").add({
     avatar,
     contend,
+    img,
     userId,
     userName,
     createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -55,23 +57,25 @@ export const addDevit = ({ avatar, contend, userId, userName }) => {
   })
 }
 
-export const fetchLatestDevits = () => {
-  return db
+export const fetchLatestDevits = async () => {
+  const { docs } = await db
     .collection("devits")
     .orderBy("createdAt", "desc")
     .get()
-    .then(({ docs }) => {
-      return docs.map((doc) => {
-        const data = doc.data()
-        const id = doc.id
-        const { createdAt } = data
+  return docs.map((doc) => {
+    const data = doc.data()
+    const id = doc.id
+    const { createdAt } = data
+    // const date = new Date(createdAt.seconds * 1000)
+    // const normalizedCreatedAt = new Intl.DateTimeFormat("es-LA").format(
+    //   date
+    // )
+    return { ...data, id, createdAt: +createdAt.toDate() }
+  })
+}
 
-        // const date = new Date(createdAt.seconds * 1000)
-        // const normalizedCreatedAt = new Intl.DateTimeFormat("es-LA").format(
-        //   date
-        // )
-
-        return { ...data, id, createdAt: +createdAt.toDate() }
-      })
-    })
+export const uploadImage = (file) => {
+  const ref = firebase.storage().ref(`images/${file.name}`)
+  const task = ref.put(file)
+  return task
 }
